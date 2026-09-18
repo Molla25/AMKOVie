@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AMKOVie — Prototype fonctionnel</title>
+<style>
+:root{--g:#176b55;--lg:#eaf6f1;--ink:#18322a;--muted:#64756f;--bg:#f5f8f7;--danger:#9b2c2c;--amber:#9a6500}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial;background:var(--bg);color:var(--ink)}
+.app{max-width:520px;margin:auto;min-height:100vh;background:#fff;box-shadow:0 0 30px #0001}
+header{padding:20px;background:linear-gradient(145deg,#176b55,#2e8b70);color:white;border-radius:0 0 24px 24px}
+.logo{font-size:24px;font-weight:800}.tag{opacity:.9;font-size:13px}
+main{padding:18px 16px 88px}.screen{display:none}.screen.active{display:block}
+h1{font-size:26px;margin:8px 0}.sub{color:var(--muted);font-size:14px}
+.card{background:#fff;border:1px solid #e2ebe7;border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 5px 18px #164d3b0b}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tile{padding:14px;border-radius:15px;background:var(--lg);border:0;text-align:left;color:var(--ink)}
+button{font:inherit;cursor:pointer}.primary{width:100%;padding:13px;border:0;border-radius:14px;background:var(--g);color:white;font-weight:700}.secondary{padding:10px 13px;border:1px solid #cddbd5;background:white;border-radius:12px}
+input,select{width:100%;padding:12px;border:1px solid #ccd9d4;border-radius:12px;margin:6px 0 12px;font:inherit}
+.badge{display:inline-block;padding:5px 8px;border-radius:999px;font-size:12px;font-weight:700;background:#edf5f2}.warn{background:#fff4d8;color:var(--amber)}.danger{background:#fdeaea;color:var(--danger)}
+.progress{height:9px;background:#e7eeeb;border-radius:99px;overflow:hidden}.progress>i{display:block;height:100%;width:62%;background:var(--g)}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:520px;width:100%;background:white;border-top:1px solid #e2ebe7;display:flex;justify-content:space-around;padding:8px 4px;z-index:5}nav button{border:0;background:none;color:var(--muted);font-size:11px}nav b{display:block;font-size:20px}
+.chat{min-height:260px}.bubble{padding:12px;border-radius:15px;margin:8px 0;max-width:88%}.ai{background:var(--lg)}.user{background:#edf0ff;margin-left:auto}.small{font-size:12px;color:var(--muted)}
+</style></head>
+<body><div class="app">
+<header><div class="logo">AMKOVie</div><div class="tag">Your Health. Your Well-being. Your Life.</div></header>
+<main>
+<section id="home" class="screen active"><h1>Bonjour 👋</h1><div class="sub">Votre tableau de bord santé</div>
+<div class="card"><b>Comment allez-vous aujourd'hui ?</b><div class="grid" style="margin-top:12px"><button class="tile">😊 Très bien</button><button class="tile">🙂 Bien</button><button class="tile">😐 Moyen</button><button class="tile">😟 Pas très bien</button></div></div>
+<div class="grid"><button class="tile" onclick="show('health')">❤️<br><b>Ma santé</b><br><span class="small">Objectifs & suivi</span></button><button class="tile" onclick="show('nature')">🌿<br><b>Nature</b><br><span class="small">Plantes & sécurité</span></button><button class="tile" onclick="show('well')">🤲<br><b>Bien-être</b><br><span class="small">Massage & relaxation</span></button><button class="tile" onclick="show('ai')">✨<br><b>AMKOVie AI</b><br><span class="small">Assistant encadré</span></button></div>
+<div class="card"><b>Mes indicateurs</b><p>💧 Hydratation 4/8</p><div class="progress"><i></i></div><p>😴 Sommeil 7 h 12</p><p>🚶 Activité 5 240 pas</p></div></section>
+
+<section id="health" class="screen"><h1>❤️ Ma santé</h1><div class="card"><b>Mes objectifs</b><p>💧 Hydratation — 62%</p><div class="progress"><i></i></div><p>😴 Sommeil — 72%</p><div class="progress"><i style="width:72%"></i></div><p>🚶 Activité — 48%</p><div class="progress"><i style="width:48%"></i></div></div><button class="primary" onclick="alert('Création d’objectif : à connecter au backend.')">+ Ajouter un objectif</button></section>
+
+<section id="nature" class="screen"><h1>🌿 Santé naturelle</h1><div class="sub">Tradition, données scientifiques et sécurité séparées.</div><div class="card"><input id="plantSearch" placeholder="Rechercher une plante…" oninput="searchPlant()"><div id="plantResult"></div></div><div class="grid"><button class="tile" onclick="showPlant()">🌱 Moringa</button><button class="tile">🍵 Préparations</button><button class="tile">📚 Études</button><button class="tile">⚠️ Sécurité</button></div></section>
+
+<section id="plant" class="screen"><h1>🌿 Moringa oleifera</h1><span class="badge warn">Preuves limitées / mixtes</span><div class="card"><b>Usage traditionnel</b><p>Les usages traditionnels doivent être présentés comme tels et ne constituent pas automatiquement une preuve d'efficacité.</p></div><div class="card"><b>Données scientifiques</b><p>Résumé à renseigner et valider par le comité scientifique AMKOVie avant publication.</p></div><div class="card"><b>⚠️ Sécurité</b><p>Vérification des médicaments, allergies, situations particulières et interactions avant toute information personnalisée.</p><button class="secondary" onclick="show('safe')">Lancer AMKOVie SAFE</button></div><div class="small">Statut : démonstration — validation scientifique requise.</div></section>
+
+<section id="safe" class="screen"><h1>🛡️ AMKOVie SAFE</h1><div class="card"><b>Avant de continuer</b><label>Prenez-vous des médicaments ?</label><select id="med"><option>Je préfère ne pas répondre</option><option>Oui</option><option>Non</option></select><label>Avez-vous une allergie connue ?</label><select id="allergy"><option>Je préfère ne pas répondre</option><option>Oui</option><option>Non</option></select><label>Situation particulière ?</label><select id="special"><option>Je préfère ne pas répondre</option><option>Oui</option><option>Non</option></select><button class="primary" onclick="runSafe()">Évaluer la sécurité</button></div><div id="safeOut"></div></section>
+
+<section id="well" class="screen"><h1>🤲 Bien-être</h1><div class="grid"><button class="tile">💆 Massage bien-être</button><button class="tile">🧘 Relaxation</button><button class="tile">🌬️ Respiration</button><button class="tile">😴 Sommeil</button></div><div class="card"><b>Professionnels</b><p>Trouvez un professionnel dont le profil et les qualifications sont vérifiés selon les règles du pays.</p><button class="primary" onclick="show('pro')">Rechercher</button></div></section>
+
+<section id="pro" class="screen"><h1>👨‍⚕️ Professionnels</h1><input placeholder="Profession, spécialité ou service"><div class="card"><b>Profil de démonstration</b><p>Massage & bien-être</p><span class="badge">✓ Vérification requise</span><button class="primary" style="margin-top:10px" onclick="show('booking')">Voir les disponibilités</button></div></section>
+
+<section id="booking" class="screen"><h1>📅 Réservation</h1><div class="card"><b>Massage bien-être</b><label>Durée</label><select><option>30 min</option><option>60 min</option><option>90 min</option></select><label>Date</label><input type="date"><label>Heure</label><input type="time"><button class="primary" onclick="alert('Réservation simulée : API de disponibilité requise en production.')">Confirmer</button></div></section>
+
+<section id="ai" class="screen"><h1>✨ AMKOVie AI</h1><div class="card chat" id="chat"><div class="bubble ai">Je peux expliquer des informations de santé, présenter les données disponibles, vous aider à préparer une consultation et vous orienter. Je ne remplace pas un professionnel et je ne prescris pas de traitement.</div></div><input id="q" placeholder="Écrivez votre question…"><button class="primary" onclick="askAI()">Envoyer</button><p class="small">Prototype : en production, les réponses doivent utiliser une base validée + moteur de sécurité + règles du pays.</p></section>
+
+<section id="profile" class="screen"><h1>👤 Profil</h1><div class="card"><b>Confidentialité</b><p>Consentements • données • export • suppression du compte</p></div><div class="card"><b>Préférences</b><p>Langue • notifications • pays</p></div></section>
+</main>
+<nav><button onclick="show('home')"><b>🏠</b>Accueil</button><button onclick="show('health')"><b>❤️</b>Santé</button><button onclick="show('nature')"><b>🌿</b>Nature</button><button onclick="show('well')"><b>🤲</b>Bien-être</button><button onclick="show('profile')"><b>👤</b>Profil</button></nav>
+</div>
+<script>
+const screens=[...document.querySelectorAll('.screen')];
+function show(id){screens.forEach(s=>s.classList.toggle('active',s.id===id));scrollTo(0,0)}
+function showPlant(){show('plant')}
+function searchPlant(){let q=document.getElementById('plantSearch').value.toLowerCase();document.getElementById('plantResult').innerHTML=q.includes('moring')?'<button class="secondary" onclick="showPlant()">🌿 Moringa oleifera — ouvrir la fiche</button>':''}
+function runSafe(){let risk=[med.value,allergy.value,special.value].includes('Oui');document.getElementById('safeOut').innerHTML=risk?'<div class="card danger"><b>Prudence requise</b><p>Des informations supplémentaires ou un avis professionnel peuvent être nécessaires. Le prototype ne donne pas de recommandation thérapeutique personnalisée.</p></div>':'<div class="card"><b>Évaluation limitée</b><p>Aucun risque déclaré dans ce formulaire. Cela ne constitue pas une garantie de sécurité.</p></div>'}
+function askAI(){let q=document.getElementById('q').value.trim();if(!q)return;let c=document.getElementById('chat');let safe=q.replace(/[<>&]/g,'');c.innerHTML+='<div class="bubble user">'+safe+'</div><div class="bubble ai"><b>AMKOVie AI</b><br>Je vais d’abord déterminer le type de demande et appliquer les règles de sécurité. Pour une question concernant un médicament, une plante, des symptômes ou un traitement, les données validées et les règles du pays doivent être vérifiées avant toute réponse personnalisée.</div>';document.getElementById('q').value=''}
+</script></body></html>
